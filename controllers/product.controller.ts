@@ -16,7 +16,7 @@ let products: Product[] = [
 ];
 
 // @desc Get All Products
-// @route GET /api/v1/products
+// @route GET /api/v1/products/:id
 const getProducts = ({ response }: { response: any }) => {
   response.body = {
     success: true,
@@ -24,4 +24,40 @@ const getProducts = ({ response }: { response: any }) => {
   };
 };
 
-export { getProducts };
+// @desc Get single Product
+// @route GET /api/v1/product
+const getProduct = ({
+  params,
+  response,
+}: {
+  params: { id: string };
+  response: any;
+}) => {
+  const product: Product | undefined = products.find(
+    (product) => product.id === params.id
+  );
+
+  if (product) {
+    response.status = 200;
+    response.body = { success: true, data: product };
+  } else {
+    response.status = 404;
+    response.body = { success: false, message: 'No product found' };
+  }
+
+  response.body = {};
+};
+
+// @desc Add Product
+// @route POST /api/v1/product
+const addProduct = ({ response }: { response: any }) => {};
+
+// @desc update Product
+// @route PUT /api/v1/product/:id
+const updateProduct = ({ response }: { response: any }) => {};
+
+// @desc delete Product
+// @route DELETE /api/v1/product/:id
+const deleteProduct = ({ response }: { response: any }) => {};
+
+export { getProducts, getProduct, addProduct, updateProduct, deleteProduct };
